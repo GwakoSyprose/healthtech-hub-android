@@ -1,6 +1,8 @@
-package dev.syprosegwako.healthtechhub.blog.domain
+package dev.syprosegwako.healthtechhub.blog.domain.usecase
 
 import android.util.Log
+import dev.syprosegwako.healthtechhub.blog.domain.TopicItem
+import dev.syprosegwako.healthtechhub.blog.domain.repository.TopicRepository
 import javax.inject.Inject
 
 class TopicUseCases @Inject constructor(

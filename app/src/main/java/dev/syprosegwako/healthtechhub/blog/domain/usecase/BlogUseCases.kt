@@ -1,5 +1,7 @@
-package dev.syprosegwako.healthtechhub.blog.domain
+package dev.syprosegwako.healthtechhub.blog.domain.usecase
 
+import dev.syprosegwako.healthtechhub.blog.domain.BlogItem
+import dev.syprosegwako.healthtechhub.blog.domain.repository.BlogRepository
 import javax.inject.Inject
 
 class BlogUseCases @Inject constructor(

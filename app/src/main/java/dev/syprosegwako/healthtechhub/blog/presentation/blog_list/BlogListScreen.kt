@@ -21,12 +21,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import dev.syprosegwako.healthtechhub.blog.presentation.AppLayout
-import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.components.BlogListItem
-import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.components.ButtonWithToggleableIcon
-import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.components.SortButton
-import dev.syprosegwako.healthtechhub.util.Constants.Navigation.BLOG_ID
-import dev.syprosegwako.healthtechhub.util.Screen
+import dev.syprosegwako.healthtechhub.core.components.AppLayout
+import dev.syprosegwako.healthtechhub.core.components.BlogListItem
+import dev.syprosegwako.healthtechhub.core.components.ButtonWithToggleableIcon
+import dev.syprosegwako.healthtechhub.core.components.SortButton
+import dev.syprosegwako.healthtechhub.core.util.Constants.Navigation.BLOG_ID
+import dev.syprosegwako.healthtechhub.core.util.Screen
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable

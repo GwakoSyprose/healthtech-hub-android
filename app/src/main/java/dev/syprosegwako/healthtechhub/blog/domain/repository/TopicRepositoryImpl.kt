@@ -1,6 +1,7 @@
-package dev.syprosegwako.healthtechhub.blog.domain
+package dev.syprosegwako.healthtechhub.blog.domain.repository
 
 import android.util.Log
+import dev.syprosegwako.healthtechhub.blog.domain.TopicItem
 import dev.syprosegwako.healthtechhub.data.local.TopicDao
 import dev.syprosegwako.healthtechhub.data.mapper.toLocalTopicItemListFromRemote
 import dev.syprosegwako.healthtechhub.data.mapper.toTopicItemListFromLocal

@@ -1,6 +1,7 @@
-package dev.syprosegwako.healthtechhub.blog.domain
+package dev.syprosegwako.healthtechhub.blog.domain.repository
 
 import android.util.Log
+import dev.syprosegwako.healthtechhub.blog.domain.BlogItem
 import dev.syprosegwako.healthtechhub.di.IoDispatcher
 import dev.syprosegwako.healthtechhub.data.local.BlogDao
 import dev.syprosegwako.healthtechhub.data.mapper.toBlogItem

@@ -1,8 +1,8 @@
-package dev.syprosegwako.healthtechhub.util
+package dev.syprosegwako.healthtechhub.core.util
 
-import dev.syprosegwako.healthtechhub.util.Constants.API.INVALID_DATE
-import dev.syprosegwako.healthtechhub.util.Constants.API.SERVER_DATE_FORMAT
-import dev.syprosegwako.healthtechhub.util.Constants.UI.DISPLAY_DATE_FORMAT
+import dev.syprosegwako.healthtechhub.core.util.Constants.API.INVALID_DATE
+import dev.syprosegwako.healthtechhub.core.util.Constants.API.SERVER_DATE_FORMAT
+import dev.syprosegwako.healthtechhub.core.util.Constants.UI.DISPLAY_DATE_FORMAT
 import java.time.Instant
 import java.time.ZoneOffset
 import java.time.ZonedDateTime

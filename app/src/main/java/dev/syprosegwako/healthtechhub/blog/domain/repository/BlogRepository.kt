@@ -1,4 +1,6 @@
-package dev.syprosegwako.healthtechhub.blog.domain
+package dev.syprosegwako.healthtechhub.blog.domain.repository
+
+import dev.syprosegwako.healthtechhub.blog.domain.BlogItem
 
 interface BlogRepository {
     suspend fun getBlogs(): List<BlogItem>

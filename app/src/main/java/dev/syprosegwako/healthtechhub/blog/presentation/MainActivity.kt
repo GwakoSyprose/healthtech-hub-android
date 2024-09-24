@@ -6,12 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -23,10 +19,11 @@ import dev.syprosegwako.healthtechhub.blog.presentation.blog_add.BlogNewViewMode
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_detail.BlogDetailScreen
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.BlogListScreen
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.BlogListViewModel
+import dev.syprosegwako.healthtechhub.blog.presentation.home.HomeScreen
 import dev.syprosegwako.healthtechhub.ui.theme.HealthTechHubTheme
-import dev.syprosegwako.healthtechhub.util.Constants.Navigation.ARG_BLOG_ID
-import dev.syprosegwako.healthtechhub.util.Constants.Navigation.BLOG_ID
-import dev.syprosegwako.healthtechhub.util.Screen
+import dev.syprosegwako.healthtechhub.core.util.Constants.Navigation.ARG_BLOG_ID
+import dev.syprosegwako.healthtechhub.core.util.Constants.Navigation.BLOG_ID
+import dev.syprosegwako.healthtechhub.core.util.Screen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -44,8 +41,13 @@ class MainActivity : ComponentActivity() {
 
                     NavHost(
                         navController = navController,
-                        startDestination = Screen.BlogListScreen.route,
+                        startDestination = Screen.HomeScreen.route,
                     ) {
+                        composable(route = Screen.HomeScreen.route) {
+                            HomeScreen(
+                                navController = navController
+                            )
+                        }
                         composable(route = Screen.BlogListScreen.route) {
                             BlogListScreen(
                                 navController = navController,

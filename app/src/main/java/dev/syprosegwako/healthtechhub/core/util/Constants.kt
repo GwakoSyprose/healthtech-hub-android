@@ -1,4 +1,4 @@
-package dev.syprosegwako.healthtechhub.util
+package dev.syprosegwako.healthtechhub.core.util
 
 object Constants {
     object Navigation {

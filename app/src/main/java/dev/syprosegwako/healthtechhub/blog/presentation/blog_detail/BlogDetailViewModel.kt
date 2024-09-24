@@ -6,9 +6,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.syprosegwako.healthtechhub.blog.domain.BlogUseCases
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.BlogUseCases
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_add.BlogState
-import dev.syprosegwako.healthtechhub.util.Constants.Navigation.ARG_BLOG_ID
+import dev.syprosegwako.healthtechhub.core.util.Constants.Navigation.ARG_BLOG_ID
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 

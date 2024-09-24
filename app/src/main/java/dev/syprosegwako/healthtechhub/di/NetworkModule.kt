@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dev.syprosegwako.healthtechhub.data.remote.BlogApi
-import dev.syprosegwako.healthtechhub.util.Constants
+import dev.syprosegwako.healthtechhub.core.util.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton

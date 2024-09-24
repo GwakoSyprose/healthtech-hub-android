@@ -1,4 +1,4 @@
-package dev.syprosegwako.healthtechhub.blog.presentation.blog_list.components
+package dev.syprosegwako.healthtechhub.core.components
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Arrangement
@@ -36,14 +36,14 @@ fun ButtonWithToggleableIcon(
         shape = RoundedCornerShape(8.dp),
         contentPadding = PaddingValues(horizontal = 8.dp, vertical = 2.dp),
         colors = ButtonColors(
-            containerColor = if (isSelected) MaterialTheme.colorScheme.primaryContainer else Color.Transparent,
+            containerColor = if (isSelected) MaterialTheme.colorScheme.secondaryContainer else Color.Transparent,
             contentColor = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurface,
             disabledContentColor = Color.Transparent,
             disabledContainerColor = Color.Transparent
         ),
         border = BorderStroke(
             width = 1.dp,
-            color = if (isSelected) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.outlineVariant),
+            color = if (isSelected) MaterialTheme.colorScheme.secondaryContainer else MaterialTheme.colorScheme.outlineVariant),
         modifier = Modifier.padding(end = 8.dp)
     ) {
         Row(
