@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
@@ -41,8 +40,8 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.syprosegwako.healthtechhub.R
 import dev.syprosegwako.healthtechhub.blog.domain.TopicItem
-import dev.syprosegwako.healthtechhub.blog.presentation.AppLayout
-import dev.syprosegwako.healthtechhub.util.Constants.UI.CHARACTER_LIMIT
+import dev.syprosegwako.healthtechhub.core.components.AppLayout
+import dev.syprosegwako.healthtechhub.core.util.Constants.UI.CHARACTER_LIMIT
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

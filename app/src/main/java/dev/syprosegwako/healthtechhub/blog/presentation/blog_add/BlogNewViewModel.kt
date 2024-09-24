@@ -8,11 +8,11 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dev.syprosegwako.healthtechhub.blog.domain.BlogUseCases
-import dev.syprosegwako.healthtechhub.blog.domain.TopicUseCaseResult
-import dev.syprosegwako.healthtechhub.blog.domain.TopicUseCases
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.BlogUseCases
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.TopicUseCaseResult
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.TopicUseCases
 import dev.syprosegwako.healthtechhub.di.IoDispatcher
-import dev.syprosegwako.healthtechhub.util.getCurrentTimestamp
+import dev.syprosegwako.healthtechhub.core.util.getCurrentTimestamp
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.Job

@@ -7,15 +7,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import dev.syprosegwako.healthtechhub.blog.domain.BlogRepository
-import dev.syprosegwako.healthtechhub.blog.domain.BlogRepositoryImpl
-import dev.syprosegwako.healthtechhub.blog.domain.TopicRepository
-import dev.syprosegwako.healthtechhub.blog.domain.TopicRepositoryImpl
+import dev.syprosegwako.healthtechhub.blog.domain.repository.BlogRepository
+import dev.syprosegwako.healthtechhub.blog.domain.repository.BlogRepositoryImpl
+import dev.syprosegwako.healthtechhub.blog.domain.repository.TopicRepository
+import dev.syprosegwako.healthtechhub.blog.domain.repository.TopicRepositoryImpl
 import dev.syprosegwako.healthtechhub.data.local.BlogDao
 import dev.syprosegwako.healthtechhub.data.local.BlogDatabase
 import dev.syprosegwako.healthtechhub.data.local.TopicDao
 import dev.syprosegwako.healthtechhub.data.remote.BlogApi
-import dev.syprosegwako.healthtechhub.util.Constants.Database.DATABASE_NAME
+import dev.syprosegwako.healthtechhub.core.util.Constants.Database.DATABASE_NAME
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 

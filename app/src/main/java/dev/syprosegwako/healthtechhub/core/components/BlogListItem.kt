@@ -1,4 +1,4 @@
-package dev.syprosegwako.healthtechhub.blog.presentation.blog_list.components
+package dev.syprosegwako.healthtechhub.core.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dev.syprosegwako.healthtechhub.blog.domain.BlogItem
 import dev.syprosegwako.healthtechhub.ui.theme.HealthTechHubTheme
-import dev.syprosegwako.healthtechhub.util.formatDate
+import dev.syprosegwako.healthtechhub.core.util.formatDate
 
 @Composable
 fun BlogListItem(
@@ -52,7 +52,7 @@ fun BlogListItem(
         ) {
             Text(
                 text = blog.createdAt.formatDate(),
-                color = Color.Gray,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Start

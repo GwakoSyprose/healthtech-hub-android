@@ -1,4 +1,4 @@
-package dev.syprosegwako.healthtechhub.blog.presentation.blog_list.components
+package dev.syprosegwako.healthtechhub.core.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row

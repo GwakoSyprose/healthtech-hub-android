@@ -1,17 +1,16 @@
 package dev.syprosegwako.healthtechhub.blog.presentation.blog_list
 
-import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.syprosegwako.healthtechhub.blog.domain.BlogItem
-import dev.syprosegwako.healthtechhub.blog.domain.BlogUseCaseResult
-import dev.syprosegwako.healthtechhub.blog.domain.BlogUseCases
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.BlogUseCaseResult
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.BlogUseCases
 import dev.syprosegwako.healthtechhub.blog.domain.TopicItem
-import dev.syprosegwako.healthtechhub.blog.domain.TopicUseCaseResult
-import dev.syprosegwako.healthtechhub.blog.domain.TopicUseCases
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.TopicUseCaseResult
+import dev.syprosegwako.healthtechhub.blog.domain.usecase.TopicUseCases
 import dev.syprosegwako.healthtechhub.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineExceptionHandler

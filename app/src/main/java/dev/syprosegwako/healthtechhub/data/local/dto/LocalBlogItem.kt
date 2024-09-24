@@ -3,7 +3,7 @@ package dev.syprosegwako.healthtechhub.data.local.dto
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import dev.syprosegwako.healthtechhub.util.Constants.Database.TABLE_BLOGS
+import dev.syprosegwako.healthtechhub.core.util.Constants.Database.TABLE_BLOGS
 
 @Entity(tableName = TABLE_BLOGS)
 data class LocalBlogItem(

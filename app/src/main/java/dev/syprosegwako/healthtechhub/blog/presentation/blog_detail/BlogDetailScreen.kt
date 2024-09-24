@@ -9,7 +9,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -18,8 +17,8 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import dev.syprosegwako.healthtechhub.R
-import dev.syprosegwako.healthtechhub.blog.presentation.AppLayout
-import dev.syprosegwako.healthtechhub.util.formatDate
+import dev.syprosegwako.healthtechhub.core.components.AppLayout
+import dev.syprosegwako.healthtechhub.core.util.formatDate
 
 @Composable
 fun BlogDetailScreen(
@@ -47,7 +46,7 @@ fun BlogDetailScreen(
             )
             Text(
                 text = "${selectedBlog.createdAt.formatDate()} | ${selectedBlog.name} ${selectedBlog.surname}",
-                color = Color.Gray,
+                color =  MaterialTheme.colorScheme.onSurfaceVariant,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Start,
