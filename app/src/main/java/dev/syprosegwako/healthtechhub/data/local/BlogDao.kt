@@ -10,15 +10,15 @@ import androidx.room.Query
 @Dao
 interface BlogDao {
     @Query("SELECT * FROM blogs")
-    suspend fun getBlogs() : List<LocalBlogItem>
+    suspend fun getBlogs(): List<LocalBlogItem>
 
-//    @Query("SELECT * FROM blogs WHERE id = :id")
-//    suspend fun getBlog(id: Int) : dev.syprosegwako.healthtechhub.data.local.dto.LocalBlogItem?
+    @Query("SELECT * FROM blogs WHERE id = :id")
+    suspend fun getBlogById(id: Int): LocalBlogItem?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addBlogs(blog: List<LocalBlogItem>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addBlog(blog: LocalBlogItem) : Long
+    suspend fun addBlog(blog: LocalBlogItem): Long
 
 }

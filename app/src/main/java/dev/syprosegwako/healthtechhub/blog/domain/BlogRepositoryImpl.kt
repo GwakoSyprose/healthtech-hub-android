@@ -3,6 +3,7 @@ package dev.syprosegwako.healthtechhub.blog.domain
 import android.util.Log
 import dev.syprosegwako.healthtechhub.di.IoDispatcher
 import dev.syprosegwako.healthtechhub.data.local.BlogDao
+import dev.syprosegwako.healthtechhub.data.mapper.toBlogItem
 import dev.syprosegwako.healthtechhub.data.mapper.toBlogItemListFromLocal
 import dev.syprosegwako.healthtechhub.data.mapper.toLocalBlogItem
 import dev.syprosegwako.healthtechhub.data.mapper.toLocalBlogItemListFromRemote
@@ -50,7 +51,6 @@ class BlogRepositoryImpl(
 
     private suspend fun refreshRoomCache() {
         val remoteBlogs = api.getBlogs()
-        Log.e("refreshRoomRemoteBlogs", remoteBlogs.toString())
         blogDao.addBlogs(remoteBlogs.toLocalBlogItemListFromRemote())
     }
 
@@ -60,9 +60,14 @@ class BlogRepositoryImpl(
         return empty
     }
 
+    override suspend fun getBlogById(id: Int): BlogItem? {
+        return blogDao.getBlogById(id)?.toBlogItem()
+    }
+
     override suspend fun addBlog(blog: BlogItem) {
         val newId = blogDao.addBlog(blog.toLocalBlogItem())
         val id = newId.toInt()
+        Log.e("addingToRemote", (blog.toRemoteBlogItem().copy(id = id).toString()))
         api.addBlog(blog.toRemoteBlogItem().copy(id = id))
     }
 
