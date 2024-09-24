@@ -150,13 +150,26 @@ class BlogListViewModel @Inject constructor(
      * @return A list of filtered `BlogItem` objects that match the selected topic IDs.
      */
     private fun getFilteredBlogs(selectedTopicIds: List<Int>): List<BlogItem> {
-        return if (selectedTopicIds.contains(TOPIC_ALL_ID) || selectedTopicIds.isEmpty()) {
+        val filteredBlogs = if (selectedTopicIds.contains(TOPIC_ALL_ID) || selectedTopicIds.isEmpty()) {
             originalBlogList
         } else {
             originalBlogList.filter { blog ->
                 selectedTopicIds.contains(blog.topicId)
             }
         }
+
+        return if (_state.value.isAscending) {
+            filteredBlogs.sortedBy { it.createdAt }
+        } else {
+            filteredBlogs.sortedByDescending { it.createdAt }
+        }
+    }
+
+    fun toggleSortOrder() {
+        _state.value = _state.value.copy(
+            isAscending = !_state.value.isAscending,
+            blogs = getFilteredBlogs(_state.value.selectedTopicIds)
+        )
     }
 
 }

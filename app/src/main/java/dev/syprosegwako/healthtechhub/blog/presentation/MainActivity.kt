@@ -24,6 +24,8 @@ import dev.syprosegwako.healthtechhub.blog.presentation.blog_detail.BlogDetailSc
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.BlogListScreen
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.BlogListViewModel
 import dev.syprosegwako.healthtechhub.ui.theme.HealthTechHubTheme
+import dev.syprosegwako.healthtechhub.util.Constants.Navigation.ARG_BLOG_ID
+import dev.syprosegwako.healthtechhub.util.Constants.Navigation.BLOG_ID
 import dev.syprosegwako.healthtechhub.util.Screen
 
 @AndroidEntryPoint
@@ -57,10 +59,10 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(
-                            route = Screen.BlogDetailScreen.route + "?blogId={blogId}",
+                            route = Screen.BlogDetailScreen.route + "?$ARG_BLOG_ID={$BLOG_ID}",
                             arguments = listOf(
                                 navArgument(
-                                    name = "blogId"
+                                    name = BLOG_ID
                                 ){
                                     type = NavType.IntType
                                     defaultValue = -1

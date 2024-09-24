@@ -51,7 +51,6 @@ class BlogRepositoryImpl(
 
     private suspend fun refreshRoomCache() {
         val remoteBlogs = api.getBlogs()
-        Log.e("refreshRoomRemoteBlogs", remoteBlogs.toString())
         blogDao.addBlogs(remoteBlogs.toLocalBlogItemListFromRemote())
     }
 
@@ -68,6 +67,7 @@ class BlogRepositoryImpl(
     override suspend fun addBlog(blog: BlogItem) {
         val newId = blogDao.addBlog(blog.toLocalBlogItem())
         val id = newId.toInt()
+        Log.e("addingToRemote", (blog.toRemoteBlogItem().copy(id = id).toString()))
         api.addBlog(blog.toRemoteBlogItem().copy(id = id))
     }
 

@@ -7,6 +7,7 @@ data class BlogListState(
     val blogs: List<BlogItem> = emptyList(),
     var topics: List<TopicItem> = emptyList(),
     val selectedTopicIds: List<Int> = emptyList(),
+    val isAscending: Boolean = false,
     val isLoading: Boolean = true,
     val error: String? = null
 )

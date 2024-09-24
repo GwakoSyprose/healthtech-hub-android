@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dev.syprosegwako.healthtechhub.blog.domain.BlogUseCases
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_add.BlogState
+import dev.syprosegwako.healthtechhub.util.Constants.Navigation.ARG_BLOG_ID
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,7 +22,7 @@ class BlogDetailViewModel @Inject constructor(
     val state: State<BlogState> = _state
 
     init {
-        savedStateHandle.get<Int>("blogId")?.let { id ->
+        savedStateHandle.get<Int>(ARG_BLOG_ID)?.let { id ->
             if(id != -1){
                 viewModelScope.launch(){
                     blogUseCases.getBlogById(id)?.also { blog ->

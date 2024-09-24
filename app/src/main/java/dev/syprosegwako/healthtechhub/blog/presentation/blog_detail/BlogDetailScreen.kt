@@ -46,7 +46,7 @@ fun BlogDetailScreen(
                 modifier = Modifier.padding(bottom = dimensionResource(R.dimen.padding_8))
             )
             Text(
-                text = selectedBlog.createdAt.formatDate(),
+                text = "${selectedBlog.createdAt.formatDate()} | ${selectedBlog.name} ${selectedBlog.surname}",
                 color = Color.Gray,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,

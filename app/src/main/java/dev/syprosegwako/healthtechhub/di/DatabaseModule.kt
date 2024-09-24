@@ -15,6 +15,7 @@ import dev.syprosegwako.healthtechhub.data.local.BlogDao
 import dev.syprosegwako.healthtechhub.data.local.BlogDatabase
 import dev.syprosegwako.healthtechhub.data.local.TopicDao
 import dev.syprosegwako.healthtechhub.data.remote.BlogApi
+import dev.syprosegwako.healthtechhub.util.Constants.Database.DATABASE_NAME
 import kotlinx.coroutines.CoroutineDispatcher
 import javax.inject.Singleton
 
@@ -28,7 +29,7 @@ object DatabaseModule {
         return Room.databaseBuilder(
             context,
             BlogDatabase::class.java,
-            "blog_database"
+            DATABASE_NAME
         )
             .fallbackToDestructiveMigration()
             .build()

@@ -48,7 +48,6 @@ class TopicRepositoryImpl(
 
     private suspend fun refreshRoomCache() {
         val remoteTopics = api.getTopics()
-        Log.e("refreshRoomRemoteTopics", remoteTopics.toString())
         dao.addTopics(remoteTopics.toLocalTopicItemListFromRemote())
     }
 

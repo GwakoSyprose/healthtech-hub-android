@@ -13,8 +13,4 @@ import dev.syprosegwako.healthtechhub.data.local.dto.LocalTopicItem
 abstract class BlogDatabase: RoomDatabase(){
     abstract val blogDao: BlogDao
     abstract val topicDao: TopicDao
-
-    companion object{
-        const val DATABASE_NAME = "blog_db"
-    }
 }

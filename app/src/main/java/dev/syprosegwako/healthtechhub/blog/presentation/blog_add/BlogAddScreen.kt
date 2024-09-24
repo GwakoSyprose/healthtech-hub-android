@@ -1,20 +1,16 @@
 package dev.syprosegwako.healthtechhub.blog.presentation.blog_add
 
-import android.util.Log
-import android.widget.Toast
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenuItem
@@ -23,49 +19,54 @@ import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MenuAnchorType
-import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import dev.syprosegwako.healthtechhub.R
 import dev.syprosegwako.healthtechhub.blog.domain.TopicItem
 import dev.syprosegwako.healthtechhub.blog.presentation.AppLayout
-import dev.syprosegwako.healthtechhub.util.Screen
-import kotlin.math.max
+import dev.syprosegwako.healthtechhub.util.Constants.UI.CHARACTER_LIMIT
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun BlogAddScreen(
     navController: NavController,
     viewModel: BlogNewViewModel = hiltViewModel()
 ) {
-    val formState = viewModel.state.value.blog
+    val uiState = viewModel.state.value
+    val formState = uiState.blog
+    val snackbarHostState = remember { SnackbarHostState() }
+
+    LaunchedEffect(key1 = true) {
+        viewModel.showSnackbarMessage.collectLatest { message ->
+            snackbarHostState.showSnackbar(
+                message = message
+            )
+            navController.navigateUp() // Navigate back after the Snackbar is shown
+        }
+    }
 
     AppLayout(
         navController = navController,
         title = "Add new Post",
+        snackbarHostState = snackbarHostState,
         showFab = false,
         onFabClick = {}
     ) { modifier ->
@@ -91,7 +92,7 @@ fun BlogAddScreen(
                 label = "Category",
                 placeholder = "Select category",
                 isError = viewModel.topicError,
-                topics = viewModel.topics,
+                topics = uiState.topics,
                 value = formState.topicId,
                 onTopicSelect = { viewModel.onTopicSelected(it) }
             )
@@ -101,11 +102,10 @@ fun BlogAddScreen(
                 onValueChange = { viewModel.onSubjectChanged(it) },
                 isError = viewModel.subjectError
             )
-            GenericTextField(
+            GenericMultiLineTextField(
                 label = "Body",
                 value = formState.body,
                 onValueChange = { viewModel.onBodyChanged(it) },
-                singleLine = false,
                 isError = viewModel.bodyError
             )
 
@@ -117,6 +117,7 @@ fun BlogAddScreen(
             Button(
                 shape = RoundedCornerShape(8.dp),
                 modifier = Modifier.fillMaxWidth(),
+                enabled = !uiState.isSubmitting,
                 onClick = {
                     if (viewModel.isFormValid()) {
                         viewModel.saveBlog()
@@ -141,7 +142,6 @@ fun GenericTextField(
     label: String,
     value: String,
     isError: Boolean = false,
-    singleLine: Boolean = true,
     onValueChange: (String) -> Unit,
     keyboardType: KeyboardType = KeyboardType.Text
 ) {
@@ -154,22 +154,64 @@ fun GenericTextField(
             shape = RoundedCornerShape(8.dp),
             keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
             isError = isError,
-            singleLine = singleLine,
+            singleLine = true,
             colors = OutlinedTextFieldDefaults.colors(
                 focusedBorderColor = MaterialTheme.colorScheme.primary,
                 cursorColor = MaterialTheme.colorScheme.primary
             ),
-            modifier = if (singleLine) {
-                modifier
-            } else {
-                modifier.heightIn(
-                    min = dimensionResource(R.dimen.multi_line_input_field_height)
+            modifier = modifier.fillMaxWidth()
+        )
+
+        if (isError) ErrorText(text = "*$label is required.")
+    }
+
+}
+
+@Composable
+fun GenericMultiLineTextField(
+    modifier: Modifier = Modifier,
+    label: String,
+    value: String,
+    isError: Boolean = false,
+    onValueChange: (String) -> Unit,
+    keyboardType: KeyboardType = KeyboardType.Text
+) {
+    var charLimitError by remember { mutableStateOf(false) }
+    val internalError = charLimitError || isError
+
+    Column(modifier.padding(bottom = dimensionResource(R.dimen.text_field_padding))) {
+        OutlinedTextField(
+            value = value,
+            onValueChange = {
+                if (it.length <= CHARACTER_LIMIT) {
+                    onValueChange(it)
+                    charLimitError = false
+                }
+                else charLimitError = true
+            },
+            textStyle = MaterialTheme.typography.bodyMedium,
+            label = { Text(label) },
+            shape = RoundedCornerShape(8.dp),
+            keyboardOptions = KeyboardOptions(keyboardType = keyboardType),
+            isError = internalError,
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedBorderColor = MaterialTheme.colorScheme.primary,
+                cursorColor = MaterialTheme.colorScheme.primary
+            ),
+            supportingText = {
+                Text(
+                    text = "${value.length} / $CHARACTER_LIMIT",
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.End,
                 )
-            }
+            },
+            modifier = modifier
+                .heightIn(min = dimensionResource(R.dimen.multi_line_input_field_height))
                 .fillMaxWidth()
         )
 
         if (isError) ErrorText(text = "*$label is required.")
+        if (internalError) ErrorText(text = "*Max character limit is exceeded.")
     }
 
 }

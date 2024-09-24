@@ -1,6 +1,5 @@
 package dev.syprosegwako.healthtechhub.blog.domain
 
-import android.util.Log
 import javax.inject.Inject
 
 class BlogUseCases @Inject constructor(
@@ -15,19 +14,16 @@ class BlogUseCases @Inject constructor(
         ) {
             throw IllegalArgumentException("All fields must be filled")
         }
-    Log.e("addBlog", blog.toString())
-       // blogRepository.addBlog(blog)
+        blogRepository.addBlog(blog)
 
     }
 
     suspend fun getBlogs(): BlogUseCaseResult {
         try {
             var blogs = blogRepository.getBlogsFromLocalCache()
-            Log.e("useCaseLocalBlog", blogs.toString())
 
             if (blogs.isEmpty()) {
                 blogs = blogRepository.getBlogs()
-                Log.e("useCaseRemoteBlog", blogs.toString())
             }
             return BlogUseCaseResult.Success(blogs)
         } catch (e: Exception) {
