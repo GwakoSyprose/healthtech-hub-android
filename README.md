@@ -1,6 +1,5 @@
 ### Blog Management Android App
 Android application for managing blogs. Users can create, view, and manage blog posts on various health topics.
-An Android application for managing blog posts, where users can create, view, and manage blog entries on various health topics.
 This application integrates with a backend API to fetch and submit blog data, follows MVVM (Model-View-ViewModel) architecture, leveraging clean architecture principles. It also uses Room Database for caching and offline access.
 Find the web version of this app here. https://github.com/GwakoSyprose/healthtech-hub
 
@@ -33,8 +32,77 @@ Find the web version of this app here. https://github.com/GwakoSyprose/healthtec
 ## Architecture
 The app follows MVVM (Model-View-ViewModel) architecture, leveraging clean architecture principles:
 
-- Domain Layer: Contains core business logic and use cases.
-- Data Layer: Manages data from remote APIs and local databases.
-- Presentation Layer:  Handles UI/UX using Jetpack Compose and follows reactive UI patterns.
+- **Domain Layer**: Contains core business logic and use cases.
+- **Data Layer**: Manages data from remote APIs and local databases.
+- **Presentation Layer**:  Handles UI/UX using Jetpack Compose and follows reactive UI patterns.
+## Package Structure
+
+The app is organized into multiple packages to keep the code modular, clean, and maintainable:
+
+### 1. **Blog Feature (Main Feature)**
+
+This feature is structured as a package with individual sub-packages for each screen:
+
+- **Presentation Package**: Contains UI code and `ViewModel` for each screen:
+  - `blog_add`: UI and `ViewModel` to add a new blog.
+  - `blog_list`: UI and `ViewModel` to display a list of blogs.
+  - `blog_detail`: UI and `ViewModel` to display blog details.
+  - `home`: UI for home screen.
+  
+These screens communicate with the domain layer to retrieve and manipulate data.
+
+### 2. **Domain**
+
+The `domain` package contains the business logic, use cases, and repositories:
+
+- **UseCases**: 
+  - `BlogUseCases`: Handles operations like adding a blog, fetching blogs, and retrieving a blog by ID.
+  - `TopicUseCases`: Handles operations related to blog topics.
+  
+- **Repositories**:
+  - `BlogRepository` Interface and `BlogRepositoryImpl` class: Manages blog data, interacts with both the local database (Room) and remote API.
+  - `TopicRepository` Interface and `TopicRepositoryImpl` Implementation: Manages blog topics.
+  
+  The repositories first attempt to fetch data from the local Room database, and then refresh the local cache with data from the remote API.
+
+### 3. **Data Layer**
+
+This package manages data sources and mapping between local and remote data.
+
+- **Local**: Contains Data Transfer Objects (DTOs) and Data Access Objects (DAOs) for Room Database.
+- **Remote**: Contains API services and DTOs for network operations.
+- **Mapper**: Maps data between local DTOs, remote DTOs, and the domain models.
+
+### 4. **Dependency Injection (DI)**
+The app uses Dagger Hilt for Dependency Injection, providing easy management of dependencies across different layers of the application.
+The `di` package contains:
+- `NetworkModule`: Provides Retrofit and other network-related dependencies.
+- `DatabaseModule`: Provides Room Database instances.
+- `DispatcherModule`: Provides Coroutine dispatchers to ensure threading consistency.
+
+### 5. **Core**
+- `components`: This package contains reusable Compose UI components that can be shared across multiple screens.
+- `utils`: Contains utility classes like Constants and helper functions that are used throughout the app.
+
+## State Management
+The app leverages:
+- `MutableState` from Jetpack Compose to manage the state of each UI element, ensuring that the UI reacts automatically to state changes.
+- `SharedFlow` is used to emit one-time UI events, such as showing a snackbar message or navigating between screens.
+
+## Navigation
+The app uses Compose Navigation with four main routes:
+- `Home`: The app’s home screen.
+- `BlogList`: A list of blogs fetched from the local cache or remote API.
+- `BlogAdd`: A screen where users can add a new blog.
+- `BlogDetail`: Displays detailed information about a specific blog post.
+The bottom bar navigation allow navigation to `Home`, `Blogs` and `Menu`(inactive). The top bar shows the title of the screen and a back navigation.
+
+## Installation
+### Prerequisites
+Ensure you have the following installed:
+- Android Studio (latest stable version)
+- JDK 11 or higher
+- Android SDK
+
 
 
