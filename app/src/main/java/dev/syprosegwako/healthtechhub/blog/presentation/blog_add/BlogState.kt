@@ -2,7 +2,7 @@ package dev.syprosegwako.healthtechhub.blog.presentation.blog_add
 
 import dev.syprosegwako.healthtechhub.blog.domain.BlogItem
 
-data class BlogNewState (
+data class BlogState (
     val blog: BlogItem = BlogItem(
         id = null,
         name = "",
@@ -14,6 +14,5 @@ data class BlogNewState (
         updatedAt = ""
     ),
     val isLoading: Boolean = true,
-    val error: String? = null,
-    val currentBlogId: Int? = null
+    val error: String? = null
 )

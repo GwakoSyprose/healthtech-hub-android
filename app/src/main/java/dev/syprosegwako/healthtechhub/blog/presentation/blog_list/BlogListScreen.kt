@@ -1,6 +1,7 @@
 package dev.syprosegwako.healthtechhub.blog.presentation.blog_list
 
 import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,25 +10,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
@@ -37,17 +29,19 @@ import androidx.compose.ui.semantics.contentDescription
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import dev.syprosegwako.healthtechhub.ui.theme.HealthTechHubTheme
 import dev.syprosegwako.healthtechhub.blog.domain.BlogItem
+import dev.syprosegwako.healthtechhub.blog.presentation.AppLayout
+import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.components.ButtonWithToggleableIcon
+import dev.syprosegwako.healthtechhub.ui.theme.HealthTechHubTheme
+import dev.syprosegwako.healthtechhub.util.Screen
+import dev.syprosegwako.healthtechhub.util.formatDate
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BlogListScreen(
     navController: NavController,
@@ -59,67 +53,34 @@ fun BlogListScreen(
         viewModel.getBlogs()
     }
 
-    Scaffold (
-        floatingActionButton = {
-            FloatingActionButton(
-                onClick = { /*TODO*/ },
-                shape = CircleShape,
-                containerColor = MaterialTheme.colorScheme.primary
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Add,
-                    contentDescription = "add blog",
-                    tint = MaterialTheme.colorScheme.onPrimary
-                )
-                
-            }
-        },
-        topBar = {
-            TopAppBar(
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.background,
-                    titleContentColor = MaterialTheme.colorScheme.primary,
-                ),
-                title = {
-                    Text(
-                        text = "Blog Posts",
-                        maxLines = 1,
-                        overflow = TextOverflow.Ellipsis,
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                },
-                navigationIcon = {
-                    IconButton(onClick = { /* do something */ }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Localized description"
-                        )
-                    }
-                },
-                actions = {
-                    IconButton(
-                        onClick = {}
-                    ) {
-                        Icon(
-                            imageVector = Icons.Filled.Menu,
-                            contentDescription = "menu"
-                        )
-                    }
-                },
-                scrollBehavior = TopAppBarDefaults.pinnedScrollBehavior(rememberTopAppBarState())
-            )
-        }
-    ) {
-        Column {
-            LazyColumn(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp, vertical = 40.dp)
-            ) {
+    AppLayout(
+        navController = navController,
+        title = "Blog Posts",
+        onFabClick = { navController.navigate(Screen.BlogAddScreen.route) }
+    ) {  modifier ->
+        Column( modifier
+            .fillMaxSize()
+            .padding(horizontal = 24.dp, vertical = 16.dp)){
 
+            LazyRow(
+                modifier = Modifier.fillMaxWidth().padding(bottom = 8.dp)
+            ){
+                items(state.topics) { topic ->
+                    val isSelected =  state.selectedTopicIds.contains(topic.id)
+                    ButtonWithToggleableIcon(
+                        isSelected = isSelected,
+                        text = topic.title,
+                        onSelected = { viewModel.onTopicSelected(topic.id) }
+                    )
+                }
+
+            }
+            LazyColumn {
+                Log.e("lazyColumn", state.blogs.toString())
                 items(state.blogs){ blog ->
                     BlogListItem(
                         blog = blog,
-                        onBlogClick = {id -> viewModel.onFilterTopics(id) }
+                        onBlogClick = {id ->  navController.navigate(Screen.BlogDetailScreen.route + "?blogId=${id}") }
                     )
                 }
             }
@@ -151,22 +112,21 @@ fun BlogListScreen(
                 }
             }
         }
-
-      
-
     }
 
 }
 
+
 @Composable
 fun BlogListItem(
     blog: BlogItem,
-    onBlogClick: (Int) -> Unit,
+    onBlogClick: (Int?) -> Unit,
     modifier: Modifier = Modifier
 ){
-
     Column(
-        modifier = modifier.fillMaxWidth().padding(16.dp)
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(vertical = 8.dp)
     ) {
         Text(
             text = blog.subject,
@@ -181,18 +141,22 @@ fun BlogListItem(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = blog.createdAt,
-                color = MaterialTheme.colorScheme.tertiary,
+                text = blog.createdAt.formatDate(),
+                color = Color.Gray,
                 fontWeight = FontWeight.Normal,
                 fontSize = 12.sp,
                 textAlign = TextAlign.Start
             )
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.ArrowForward,
-                contentDescription = "Next Icon",
-                tint = MaterialTheme.colorScheme.onSurface,
-                modifier = modifier.size(20.dp)
-            )
+            IconButton(
+                onClick =  { onBlogClick(blog.id) }
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowForward,
+                    contentDescription = "Next Icon",
+                    tint = MaterialTheme.colorScheme.onSurface,
+                    modifier = modifier.size(20.dp)
+                )
+            }
 
         }
         HorizontalDivider(

@@ -15,8 +15,8 @@ class BlogUseCases @Inject constructor(
         ) {
             throw IllegalArgumentException("All fields must be filled")
         }
-
-        blogRepository.addBlog(blog)
+    Log.e("addBlog", blog.toString())
+       // blogRepository.addBlog(blog)
 
     }
 
@@ -33,7 +33,10 @@ class BlogUseCases @Inject constructor(
         } catch (e: Exception) {
             return BlogUseCaseResult.Error("Could not load blogs")
         }
+    }
 
+    suspend fun getBlogById(id: Int): BlogItem? {
+        return blogRepository.getBlogById(id)
     }
 }
 

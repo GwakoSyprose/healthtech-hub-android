@@ -11,11 +11,16 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import dagger.hilt.android.AndroidEntryPoint
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_add.BlogAddScreen
+import dev.syprosegwako.healthtechhub.blog.presentation.blog_add.BlogNewViewModel
+import dev.syprosegwako.healthtechhub.blog.presentation.blog_detail.BlogDetailScreen
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.BlogListScreen
 import dev.syprosegwako.healthtechhub.blog.presentation.blog_list.BlogListViewModel
 import dev.syprosegwako.healthtechhub.ui.theme.HealthTechHubTheme
@@ -33,6 +38,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     val navController = rememberNavController()
                     val blogListViewModel: BlogListViewModel = hiltViewModel()
+                    val blogNewViewModel: BlogNewViewModel = hiltViewModel()
 
                     NavHost(
                         navController = navController,
@@ -45,7 +51,25 @@ class MainActivity : ComponentActivity() {
                             )
                         }
                         composable(route = Screen.BlogAddScreen.route) {
-                            BlogAddScreen()
+                            BlogAddScreen(
+                                navController = navController,
+                                viewModel = blogNewViewModel
+                            )
+                        }
+                        composable(
+                            route = Screen.BlogDetailScreen.route + "?blogId={blogId}",
+                            arguments = listOf(
+                                navArgument(
+                                    name = "blogId"
+                                ){
+                                    type = NavType.IntType
+                                    defaultValue = -1
+                                }
+                            )
+                        ){
+                            BlogDetailScreen(
+                                navController = navController
+                            )
                         }
 
                     }

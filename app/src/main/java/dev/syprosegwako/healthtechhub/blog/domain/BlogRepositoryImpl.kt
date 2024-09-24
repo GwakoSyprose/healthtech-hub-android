@@ -3,6 +3,7 @@ package dev.syprosegwako.healthtechhub.blog.domain
 import android.util.Log
 import dev.syprosegwako.healthtechhub.di.IoDispatcher
 import dev.syprosegwako.healthtechhub.data.local.BlogDao
+import dev.syprosegwako.healthtechhub.data.mapper.toBlogItem
 import dev.syprosegwako.healthtechhub.data.mapper.toBlogItemListFromLocal
 import dev.syprosegwako.healthtechhub.data.mapper.toLocalBlogItem
 import dev.syprosegwako.healthtechhub.data.mapper.toLocalBlogItemListFromRemote
@@ -58,6 +59,10 @@ class BlogRepositoryImpl(
         var empty = true
         if (blogDao.getBlogs().isNotEmpty()) empty = false
         return empty
+    }
+
+    override suspend fun getBlogById(id: Int): BlogItem? {
+        return blogDao.getBlogById(id)?.toBlogItem()
     }
 
     override suspend fun addBlog(blog: BlogItem) {

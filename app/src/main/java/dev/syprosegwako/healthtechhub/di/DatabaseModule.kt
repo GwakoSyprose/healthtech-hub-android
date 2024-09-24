@@ -9,13 +9,13 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import dev.syprosegwako.healthtechhub.blog.domain.BlogRepository
 import dev.syprosegwako.healthtechhub.blog.domain.BlogRepositoryImpl
+import dev.syprosegwako.healthtechhub.blog.domain.TopicRepository
+import dev.syprosegwako.healthtechhub.blog.domain.TopicRepositoryImpl
 import dev.syprosegwako.healthtechhub.data.local.BlogDao
 import dev.syprosegwako.healthtechhub.data.local.BlogDatabase
 import dev.syprosegwako.healthtechhub.data.local.TopicDao
 import dev.syprosegwako.healthtechhub.data.remote.BlogApi
 import kotlinx.coroutines.CoroutineDispatcher
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
 
 @Module
@@ -48,6 +48,12 @@ object DatabaseModule {
     @Singleton
     fun provideBlogRepository(db: BlogDatabase, api: BlogApi, @IoDispatcher dispatcher: CoroutineDispatcher): BlogRepository {
         return BlogRepositoryImpl(db.blogDao, api, dispatcher)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTopicRepository(db: BlogDatabase, api: BlogApi, @IoDispatcher dispatcher: CoroutineDispatcher): TopicRepository {
+        return TopicRepositoryImpl(db.topicDao, api, dispatcher)
     }
 
 
