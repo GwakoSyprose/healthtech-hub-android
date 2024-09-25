@@ -30,9 +30,15 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildFeatures {
+                buildConfig = true
+            }
             buildConfigField( "String", "BASE_URL", "\"https://demo.api.nuvoteq.io/api/\"")
         }
         debug {
+            buildFeatures {
+                buildConfig = true
+            }
             buildConfigField ("String", "BASE_URL", "\"https://demo.api.nuvoteq.io/api/\"")
         }
     }
