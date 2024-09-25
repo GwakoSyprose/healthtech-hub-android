@@ -12,7 +12,6 @@ object Constants {
     }
 
     object API {
-        const val BASE_URL = "https://demo.api.nuvoteq.io/api/"
         const val SERVER_DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss.SSSSSS'Z'"
         const val INVALID_DATE = "Date not available"
     }

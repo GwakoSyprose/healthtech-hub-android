@@ -4,8 +4,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import dev.syprosegwako.healthtechhub.BuildConfig
 import dev.syprosegwako.healthtechhub.data.remote.BlogApi
-import dev.syprosegwako.healthtechhub.core.util.Constants
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Singleton
@@ -19,7 +19,7 @@ object NetworkModule {
     fun provideRetrofit(): Retrofit {
         return Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(Constants.API.BASE_URL)
+            .baseUrl(BuildConfig.BASE_URL)
             .build()
     }
 

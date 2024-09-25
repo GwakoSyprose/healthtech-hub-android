@@ -52,6 +52,7 @@ class BlogRepositoryImpl(
 
     private suspend fun refreshRoomCache() {
         val remoteBlogs = api.getBlogs()
+        Log.e("remoteBlogs", remoteBlogs.toString())
         blogDao.addBlogs(remoteBlogs.toLocalBlogItemListFromRemote())
     }
 
