@@ -4,7 +4,7 @@ This application integrates with a backend API to fetch and submit blog data, fo
 Find the web version of this app here. https://github.com/GwakoSyprose/healthtech-hub
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c8560a14-f846-4f19-bf51-11e7bd4e718b" alt="Image 1" width="200"/>
+  <img src="https://github.com/user-attachments/assets/1d24659f-eecd-4e11-be30-7c3a53148901" alt="Image 1" width="200"/>
   <img src="https://github.com/user-attachments/assets/d789c8cc-24d1-4a6a-a6b7-05ed8bd25b87" alt="Image 2" width="200"/>
   <img src="https://github.com/user-attachments/assets/3b9a6ee7-f9b4-4255-a995-256fe88d6ac0" alt="Image 3" width="200"/>
   <img src="https://github.com/user-attachments/assets/69ae583b-28d3-4514-8bf0-05789d891759" alt="Image 4" width="200"/>
@@ -103,6 +103,9 @@ Ensure you have the following installed:
 - Android Studio (latest stable version)
 - JDK 11 or higher
 - Android SDK
+  
+### BASE API URL
+We use `BuildConfig` to securely store API URLs and other sensitive information. 
 
 
 
